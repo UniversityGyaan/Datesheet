@@ -13,7 +13,7 @@ body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
     background-color: #0b1120;
-    overflow: hidden; /* Prevents background orbs from creating scrollbars */
+    overflow: hidden; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -83,6 +83,15 @@ p.subtitle {
     font-size: 14px;
     margin-bottom: 30px;
     font-weight: 400;
+    line-height: 1.5;
+}
+
+.hindi-text {
+    font-size: 13px;
+    color: #00f2fe;
+    opacity: 0.9;
+    display: block;
+    margin-top: 5px;
 }
 
 /* Gamified 3D Buttons */
@@ -147,7 +156,7 @@ p.subtitle {
 
 .btn i { font-size: 22px; }
 
-/* Pulse Animations to grab attention */
+/* Pulse Animations */
 @keyframes pulseRed { 0% {box-shadow: 0 6px 0 #800000, 0 0 0 0 rgba(255,0,0,0.7);} 70% {box-shadow: 0 6px 0 #800000, 0 0 0 15px rgba(255,0,0,0);} 100% {box-shadow: 0 6px 0 #800000, 0 0 0 0 rgba(255,0,0,0);} }
 @keyframes pulseGreen { 0% {box-shadow: 0 6px 0 #0d6157, 0 0 0 0 rgba(37,211,102,0.7);} 70% {box-shadow: 0 6px 0 #0d6157, 0 0 0 15px rgba(37,211,102,0);} 100% {box-shadow: 0 6px 0 #0d6157, 0 0 0 0 rgba(37,211,102,0);} }
 @keyframes pulseGold { 0% {box-shadow: 0 6px 0 #b37400, 0 0 0 0 rgba(255,215,0,0.7);} 70% {box-shadow: 0 6px 0 #b37400, 0 0 0 15px rgba(255,215,0,0);} 100% {box-shadow: 0 6px 0 #b37400, 0 0 0 0 rgba(255,215,0,0);} }
@@ -191,7 +200,10 @@ p.subtitle {
     <img src="logo.png" alt="University Gyaan" class="logo" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=University+Gyaan&background=ff0055&color=fff&size=150&font-size=0.4&bold=true';">
     
     <h1>University Gyaan</h1>
-    <p class="subtitle">Complete steps to unlock datesheet</p>
+    <p class="subtitle">
+        Complete steps to unlock datesheet
+        <span class="hindi-text">(Datesheet unlock karne ke liye sabhi steps pure karein)</span>
+    </p>
 
     <button class="btn youtube enabled" onclick="openYoutube()" id="ytBtn">
         <i class="fa-brands fa-youtube"></i> Subscribe
@@ -202,7 +214,7 @@ p.subtitle {
     </button>
 
     <button class="btn download" id="downloadBtn" onclick="downloadFile()">
-        <i class="fa-solid fa-lock"></i> Locked
+        <i class="fa-solid fa-lock" id="lockIcon"></i> Download Datesheet
     </button>
 
     <div class="progress-container">
@@ -220,9 +232,9 @@ let waDone = false;
 function openYoutube(){
     ytStart = Date.now();
     window.open("https://www.youtube.com/@University_Gyaan?sub_confirmation=1","_blank");
-    document.getElementById("statusText").innerText = "Checking... Please stay for 8 seconds.";
+    // Changed timer text to 3 seconds
+    document.getElementById("statusText").innerText = "Checking... Please stay for 3 seconds.";
     
-    // Stop youtube button pulse once clicked
     document.getElementById("ytBtn").style.animation = "none";
 }
 
@@ -232,21 +244,22 @@ function openWhatsapp(){
     
     document.getElementById("waBtn").style.animation = "none";
 
+    // Changed WhatsApp wait time to 3 seconds (3000 milliseconds)
     setTimeout(() => {
         waDone = true;
         updateProgress();
-    }, 5000); 
+    }, 3000); 
 }
 
 document.addEventListener("visibilitychange", function(){
     if(document.visibilityState === "visible" && ytStart !== 0 && !ytDone){
         let seconds = (Date.now() - ytStart) / 1000;
 
-        if(seconds >= 8){
+        // Changed YouTube check to 3 seconds
+        if(seconds >= 3){
             ytDone = true;
             document.getElementById("waBtn").classList.add("enabled");
             
-            // Update YouTube button visually
             document.getElementById("ytBtn").innerHTML = '<i class="fa-solid fa-check"></i> Subscribed';
             document.getElementById("ytBtn").style.background = "#333";
             document.getElementById("ytBtn").style.boxShadow = "0 6px 0 #111";
@@ -256,7 +269,7 @@ document.addEventListener("visibilitychange", function(){
         } else {
             document.getElementById("statusText").innerText = "Don't rush! Stay on YouTube a bit longer.";
             ytStart = 0; 
-            document.getElementById("ytBtn").style.animation = "pulseRed 2s infinite"; // resume pulse
+            document.getElementById("ytBtn").style.animation = "pulseRed 2s infinite"; 
         }
     }
 });
@@ -272,7 +285,6 @@ function updateProgress(){
     if(progress === 100){
         document.getElementById("downloadBtn").classList.add("enabled");
         
-        // Update WhatsApp button visually
         document.getElementById("waBtn").innerHTML = '<i class="fa-solid fa-check"></i> Joined';
         document.getElementById("waBtn").style.background = "#333";
         document.getElementById("waBtn").style.boxShadow = "0 6px 0 #111";
@@ -281,8 +293,9 @@ function updateProgress(){
         statusEl.innerHTML = "✨ Unlocked! You can download now.";
         statusEl.style.color = "#00f2fe";
         
+        // Changing Lock icon to Unlock icon
         const dlBtn = document.getElementById("downloadBtn");
-        dlBtn.innerHTML = '<i class="fa-solid fa-download"></i> Get Datesheet';
+        dlBtn.innerHTML = '<i class="fa-solid fa-lock-open"></i> Download Datesheet';
     }
 }
 
