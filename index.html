@@ -105,14 +105,14 @@ p.subtitle {
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    -webkit-tap-highlight-color: transparent; /* Smooth tapping on mobile */
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* Inactive states */
@@ -153,6 +153,15 @@ p.subtitle {
     animation: pulseGold 2s infinite;
 }
 
+/* Verified Success State */
+.btn.verified {
+    background: linear-gradient(135deg, #28a745, #1e7e34) !important;
+    color: white !important;
+    box-shadow: 0 6px 0 #145523 !important;
+    animation: none !important;
+    pointer-events: none !important; /* Stop clicking after verified */
+}
+
 /* 3D Click Effect */
 .btn.enabled:active {
     transform: translateY(6px);
@@ -191,6 +200,17 @@ p.subtitle {
     color: #cbd5e1;
     font-weight: 600;
     min-height: 20px;
+    transition: 0.3s;
+}
+
+.processing-text {
+    color: #FFD700;
+    animation: flash 1.5s infinite;
+}
+
+@keyframes flash {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
 }
 </style>
 </head>
@@ -235,37 +255,68 @@ let waDone = false;
 
 function openYoutube(){
     window.open("https://www.youtube.com/@University_Gyaan?sub_confirmation=1","_blank");
-    document.getElementById("statusText").innerText = "Checking... Please wait 3 seconds.";
-    document.getElementById("ytBtn").style.animation = "none";
+    
+    const ytBtn = document.getElementById("ytBtn");
+    const statusText = document.getElementById("statusText");
+
+    // Start Fake Loading State
+    ytBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+    ytBtn.style.animation = "none";
+    ytBtn.style.pointerEvents = "none";
+    
+    statusText.innerHTML = '<span class="processing-text">Connecting to YouTube API...</span>';
+
+    // Fake Verification Steps
+    setTimeout(() => {
+        statusText.innerHTML = '<span class="processing-text">Verifying Subscriber ID...</span>';
+    }, 1500);
 
     setTimeout(() => {
         if(!ytDone) {
             ytDone = true;
             document.getElementById("waBtn").classList.add("enabled");
             
-            document.getElementById("ytBtn").innerHTML = '<i class="fa-solid fa-check"></i> Subscribed';
-            document.getElementById("ytBtn").style.background = "#333";
-            document.getElementById("ytBtn").style.boxShadow = "0 6px 0 #111";
+            ytBtn.classList.add("verified");
+            ytBtn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Verified';
             
-            document.getElementById("statusText").innerText = "Step 1 Done! Now join WhatsApp.";
+            statusText.innerText = "Step 1 Verified! Now join WhatsApp.";
+            statusText.style.color = "#28a745";
             updateProgress();
         }
-    }, 3000); 
+    }, 3500); // 3.5 Seconds total wait
 }
 
 function openWhatsapp(){
     if(!ytDone) return;
 
     window.open("https://whatsapp.com/channel/0029Va8mCyHDuMRolLgWPM2S","_blank");
-    document.getElementById("statusText").innerText = "Verifying WhatsApp...";
-    document.getElementById("waBtn").style.animation = "none";
+    
+    const waBtn = document.getElementById("waBtn");
+    const statusText = document.getElementById("statusText");
+
+    // Start Fake Loading State
+    waBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+    waBtn.style.animation = "none";
+    waBtn.style.pointerEvents = "none";
+
+    statusText.innerHTML = '<span class="processing-text">Connecting to WhatsApp Server...</span>';
+    statusText.style.color = "#cbd5e1";
+
+    // Fake Verification Steps
+    setTimeout(() => {
+        statusText.innerHTML = '<span class="processing-text">Scanning Channel Members...</span>';
+    }, 1500);
 
     setTimeout(() => {
         if(!waDone) {
             waDone = true;
+            
+            waBtn.classList.add("verified");
+            waBtn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Verified';
+            
             updateProgress();
         }
-    }, 3000); 
+    }, 3500); // 3.5 Seconds total wait
 }
 
 function updateProgress(){
@@ -279,13 +330,10 @@ function updateProgress(){
     if(progress === 100){
         document.getElementById("downloadBtn").classList.add("enabled");
         
-        document.getElementById("waBtn").innerHTML = '<i class="fa-solid fa-check"></i> Joined';
-        document.getElementById("waBtn").style.background = "#333";
-        document.getElementById("waBtn").style.boxShadow = "0 6px 0 #111";
-
         const statusEl = document.getElementById("statusText");
-        statusEl.innerHTML = "✨ Unlocked! You can download now.";
+        statusEl.innerHTML = "✨ Verification Successful! You can download now.";
         statusEl.style.color = "#00f2fe";
+        statusEl.classList.remove("processing-text");
         
         const dlBtn = document.getElementById("downloadBtn");
         dlBtn.innerHTML = '<i class="fa-solid fa-lock-open"></i> Download Datesheet';
@@ -301,4 +349,5 @@ function downloadFile(){
 
 </body>
 </html>
+
 
