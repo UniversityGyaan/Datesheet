@@ -112,6 +112,7 @@ p.subtitle {
     gap: 12px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    -webkit-tap-highlight-color: transparent; /* Smooth tapping on mobile */
 }
 
 /* Inactive states */
@@ -122,7 +123,11 @@ p.subtitle {
     pointer-events: none;
 }
 
-/* Active YouTube Button with Pulse Effect */
+.btn.enabled {
+    pointer-events: auto !important;
+}
+
+/* Active YouTube Button */
 .youtube.enabled {
     background: linear-gradient(135deg, #ff0000, #b30000);
     color: white;
@@ -233,7 +238,6 @@ function openYoutube(){
     document.getElementById("statusText").innerText = "Checking... Please wait 3 seconds.";
     document.getElementById("ytBtn").style.animation = "none";
 
-    // Ab visibility change ke bajaye direct 3 seconds ka timer chalega
     setTimeout(() => {
         if(!ytDone) {
             ytDone = true;
@@ -250,11 +254,12 @@ function openYoutube(){
 }
 
 function openWhatsapp(){
+    if(!ytDone) return;
+
     window.open("https://whatsapp.com/channel/0029Va8mCyHDuMRolLgWPM2S","_blank");
     document.getElementById("statusText").innerText = "Verifying WhatsApp...";
     document.getElementById("waBtn").style.animation = "none";
 
-    // WhatsApp ke liye 3 seconds ka timer
     setTimeout(() => {
         if(!waDone) {
             waDone = true;
@@ -282,7 +287,6 @@ function updateProgress(){
         statusEl.innerHTML = "✨ Unlocked! You can download now.";
         statusEl.style.color = "#00f2fe";
         
-        // Changing Lock icon to Unlock icon
         const dlBtn = document.getElementById("downloadBtn");
         dlBtn.innerHTML = '<i class="fa-solid fa-lock-open"></i> Download Datesheet';
     }
@@ -297,3 +301,4 @@ function downloadFile(){
 
 </body>
 </html>
+
