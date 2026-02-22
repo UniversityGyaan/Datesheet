@@ -225,38 +225,17 @@ p.subtitle {
 </div>
 
 <script>
-let ytStart = 0;
 let ytDone = false;
 let waDone = false;
 
 function openYoutube(){
-    ytStart = Date.now();
     window.open("https://www.youtube.com/@University_Gyaan?sub_confirmation=1","_blank");
-    // Changed timer text to 3 seconds
-    document.getElementById("statusText").innerText = "Checking... Please stay for 3 seconds.";
-    
+    document.getElementById("statusText").innerText = "Checking... Please wait 3 seconds.";
     document.getElementById("ytBtn").style.animation = "none";
-}
 
-function openWhatsapp(){
-    window.open("https://whatsapp.com/channel/0029Va8mCyHDuMRolLgWPM2S","_blank");
-    document.getElementById("statusText").innerText = "Verifying WhatsApp...";
-    
-    document.getElementById("waBtn").style.animation = "none";
-
-    // Changed WhatsApp wait time to 3 seconds (3000 milliseconds)
+    // Ab visibility change ke bajaye direct 3 seconds ka timer chalega
     setTimeout(() => {
-        waDone = true;
-        updateProgress();
-    }, 3000); 
-}
-
-document.addEventListener("visibilitychange", function(){
-    if(document.visibilityState === "visible" && ytStart !== 0 && !ytDone){
-        let seconds = (Date.now() - ytStart) / 1000;
-
-        // Changed YouTube check to 3 seconds
-        if(seconds >= 3){
+        if(!ytDone) {
             ytDone = true;
             document.getElementById("waBtn").classList.add("enabled");
             
@@ -266,13 +245,23 @@ document.addEventListener("visibilitychange", function(){
             
             document.getElementById("statusText").innerText = "Step 1 Done! Now join WhatsApp.";
             updateProgress();
-        } else {
-            document.getElementById("statusText").innerText = "Don't rush! Stay on YouTube a bit longer.";
-            ytStart = 0; 
-            document.getElementById("ytBtn").style.animation = "pulseRed 2s infinite"; 
         }
-    }
-});
+    }, 3000); 
+}
+
+function openWhatsapp(){
+    window.open("https://whatsapp.com/channel/0029Va8mCyHDuMRolLgWPM2S","_blank");
+    document.getElementById("statusText").innerText = "Verifying WhatsApp...";
+    document.getElementById("waBtn").style.animation = "none";
+
+    // WhatsApp ke liye 3 seconds ka timer
+    setTimeout(() => {
+        if(!waDone) {
+            waDone = true;
+            updateProgress();
+        }
+    }, 3000); 
+}
 
 function updateProgress(){
     let progress = 0;
