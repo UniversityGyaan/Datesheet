@@ -5,21 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>University Gyaan - Download Datesheet</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
-/* Animated Background */
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
+/* Modern Dark Theme with Floating Glowing Orbs */
 body {
     margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(-45deg, #0b1f3a, #132e57, #1a3c6b, #0d2547);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
+    font-family: 'Poppins', sans-serif;
+    background-color: #0b1120;
+    overflow: hidden; /* Prevents background orbs from creating scrollbars */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,119 +21,161 @@ body {
     color: white;
 }
 
-/* Enhanced Glassmorphism Card */
-.container {
-    width: 90%;
-    max-width: 400px;
-    padding: 35px 25px;
-    border-radius: 24px;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
-    text-align: center;
-    transform: translateY(0);
-    transition: transform 0.3s ease;
+/* Glowing Background Shapes */
+.bg-shape {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: -1;
+    animation: float 8s infinite alternate ease-in-out;
+}
+.shape1 { width: 350px; height: 350px; background: #ff0055; top: -100px; left: -100px; opacity: 0.6; }
+.shape2 { width: 400px; height: 400px; background: #00f2fe; bottom: -150px; right: -100px; opacity: 0.5; }
+.shape3 { width: 250px; height: 250px; background: #7b2cbf; top: 40%; left: 50%; opacity: 0.4; }
+
+@keyframes float {
+    0% { transform: translateY(0px) scale(1); }
+    100% { transform: translateY(30px) scale(1.1); }
 }
 
+/* Sleek Premium Card */
+.container {
+    width: 90%;
+    max-width: 420px;
+    padding: 40px 30px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    text-align: center;
+    z-index: 1;
+}
+
+/* Bouncing Logo */
 .logo {
     width: 100px;
-    margin-bottom: 15px;
+    height: 100px;
+    margin-bottom: 20px;
     border-radius: 50%; 
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+    animation: gentleBounce 3s infinite ease-in-out;
+    object-fit: cover;
+}
+
+@keyframes gentleBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }
 
 h1 {
-    color: #FFD700;
-    margin: 0 0 10px 0;
-    font-size: 26px;
-    letter-spacing: 1px;
+    color: #ffffff;
+    margin: 0 0 5px 0;
+    font-size: 28px;
+    font-weight: 800;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
 p.subtitle {
-    color: #b0c4de;
+    color: #a0aec0;
     font-size: 14px;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
+    font-weight: 400;
 }
 
-/* Improved Buttons */
+/* Gamified 3D Buttons */
 .btn {
     width: 100%;
-    padding: 15px;
-    margin-top: 15px;
-    border-radius: 14px;
+    padding: 16px;
+    margin-top: 16px;
+    border-radius: 16px;
     border: none;
     font-size: 16px;
+    font-family: 'Poppins', sans-serif;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.youtube {
-    background: linear-gradient(145deg, #ff0000, #c4302b);
-    color: white;
-    box-shadow: 0 8px 15px rgba(255, 0, 0, 0.2);
-}
-
-.whatsapp {
-    background: linear-gradient(145deg, #25D366, #128C7E);
-    color: white;
-    opacity: 0.4;
-    pointer-events: none; /* Prevents clicking while disabled */
-}
-
-.download {
-    background: linear-gradient(145deg, #FFD700, #F39C12);
-    color: #0b1f3a;
-    opacity: 0.4;
+/* Inactive states */
+.whatsapp, .download {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     pointer-events: none;
 }
 
-/* Active State Hover Animations */
-.btn.enabled {
-    opacity: 1 !important;
-    pointer-events: auto !important;
+/* Active YouTube Button with Pulse Effect */
+.youtube.enabled {
+    background: linear-gradient(135deg, #ff0000, #b30000);
+    color: white;
+    box-shadow: 0 6px 0 #800000, 0 15px 20px rgba(255,0,0,0.4);
+    animation: pulseRed 2s infinite;
 }
 
-.btn.enabled:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 20px rgba(0,0,0,0.4);
+/* Active WhatsApp Button */
+.whatsapp.enabled {
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: white;
+    box-shadow: 0 6px 0 #0d6157, 0 15px 20px rgba(37, 211, 102, 0.4);
+    border: none;
+    animation: pulseGreen 2s infinite;
 }
 
-.btn i {
-    font-size: 20px;
+/* Active Download Button */
+.download.enabled {
+    background: linear-gradient(135deg, #FFD700, #F39C12);
+    color: #0b1120;
+    box-shadow: 0 6px 0 #b37400, 0 15px 20px rgba(255, 215, 0, 0.3);
+    border: none;
+    animation: pulseGold 2s infinite;
 }
 
-/* Sleeker Progress Bar */
+/* 3D Click Effect */
+.btn.enabled:active {
+    transform: translateY(6px);
+    box-shadow: 0 0px 0 transparent, 0 5px 10px rgba(0,0,0,0.4);
+}
+
+.btn i { font-size: 22px; }
+
+/* Pulse Animations to grab attention */
+@keyframes pulseRed { 0% {box-shadow: 0 6px 0 #800000, 0 0 0 0 rgba(255,0,0,0.7);} 70% {box-shadow: 0 6px 0 #800000, 0 0 0 15px rgba(255,0,0,0);} 100% {box-shadow: 0 6px 0 #800000, 0 0 0 0 rgba(255,0,0,0);} }
+@keyframes pulseGreen { 0% {box-shadow: 0 6px 0 #0d6157, 0 0 0 0 rgba(37,211,102,0.7);} 70% {box-shadow: 0 6px 0 #0d6157, 0 0 0 15px rgba(37,211,102,0);} 100% {box-shadow: 0 6px 0 #0d6157, 0 0 0 0 rgba(37,211,102,0);} }
+@keyframes pulseGold { 0% {box-shadow: 0 6px 0 #b37400, 0 0 0 0 rgba(255,215,0,0.7);} 70% {box-shadow: 0 6px 0 #b37400, 0 0 0 15px rgba(255,215,0,0);} 100% {box-shadow: 0 6px 0 #b37400, 0 0 0 0 rgba(255,215,0,0);} }
+
+/* Glow Progress Bar */
 .progress-container {
     width: 100%;
-    height: 10px;
+    height: 8px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 20px;
-    margin-top: 25px;
+    margin-top: 30px;
     overflow: hidden;
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
 }
 
 .progress-bar {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, #FFD700, #FFF8DC);
+    background: linear-gradient(90deg, #ff0055, #00f2fe);
     border-radius: 20px;
-    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.8);
 }
 
 .status {
     font-size: 14px;
-    margin-top: 15px;
-    color: #d1d8e0;
-    font-weight: 500;
+    margin-top: 18px;
+    color: #cbd5e1;
+    font-weight: 600;
     min-height: 20px;
 }
 </style>
@@ -147,28 +183,33 @@ p.subtitle {
 
 <body>
 
-<div class="container">
-    <img src="logo.png" alt="University Gyaan" class="logo">
-    <h1>University Gyaan</h1>
-    <p class="subtitle">Complete all steps to unlock the datesheet</p>
+<div class="bg-shape shape1"></div>
+<div class="bg-shape shape2"></div>
+<div class="bg-shape shape3"></div>
 
-    <button class="btn youtube enabled" onclick="openYoutube()">
-        <i class="fa-brands fa-youtube"></i> Step 1: Subscribe
+<div class="container">
+    <img src="logo.png" alt="University Gyaan" class="logo" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=University+Gyaan&background=ff0055&color=fff&size=150&font-size=0.4&bold=true';">
+    
+    <h1>University Gyaan</h1>
+    <p class="subtitle">Complete steps to unlock datesheet</p>
+
+    <button class="btn youtube enabled" onclick="openYoutube()" id="ytBtn">
+        <i class="fa-brands fa-youtube"></i> Subscribe
     </button>
 
     <button class="btn whatsapp" id="waBtn" onclick="openWhatsapp()">
-        <i class="fa-brands fa-whatsapp"></i> Step 2: Join Channel
+        <i class="fa-brands fa-whatsapp"></i> Join Channel
     </button>
 
     <button class="btn download" id="downloadBtn" onclick="downloadFile()">
-        <i class="fa-solid fa-lock-open"></i> Download Datesheet
+        <i class="fa-solid fa-lock"></i> Locked
     </button>
 
     <div class="progress-container">
         <div class="progress-bar" id="progressBar"></div>
     </div>
 
-    <div class="status" id="statusText">Waiting for YouTube subscription...</div>
+    <div class="status" id="statusText">Awaiting Step 1...</div>
 </div>
 
 <script>
@@ -179,18 +220,22 @@ let waDone = false;
 function openYoutube(){
     ytStart = Date.now();
     window.open("https://www.youtube.com/@University_Gyaan?sub_confirmation=1","_blank");
-    document.getElementById("statusText").innerText = "Waiting for verification (Stay for 8s)...";
+    document.getElementById("statusText").innerText = "Checking... Please stay for 8 seconds.";
+    
+    // Stop youtube button pulse once clicked
+    document.getElementById("ytBtn").style.animation = "none";
 }
 
 function openWhatsapp(){
     window.open("https://whatsapp.com/channel/0029Va8mCyHDuMRolLgWPM2S","_blank");
-    document.getElementById("statusText").innerText = "Verifying WhatsApp connection...";
+    document.getElementById("statusText").innerText = "Verifying WhatsApp...";
     
-    // Simulating WhatsApp verification time
+    document.getElementById("waBtn").style.animation = "none";
+
     setTimeout(() => {
         waDone = true;
         updateProgress();
-    }, 5000); // 5 sec stay required
+    }, 5000); 
 }
 
 document.addEventListener("visibilitychange", function(){
@@ -200,11 +245,18 @@ document.addEventListener("visibilitychange", function(){
         if(seconds >= 8){
             ytDone = true;
             document.getElementById("waBtn").classList.add("enabled");
-            document.getElementById("statusText").innerText = "YouTube verified! Now join WhatsApp.";
+            
+            // Update YouTube button visually
+            document.getElementById("ytBtn").innerHTML = '<i class="fa-solid fa-check"></i> Subscribed';
+            document.getElementById("ytBtn").style.background = "#333";
+            document.getElementById("ytBtn").style.boxShadow = "0 6px 0 #111";
+            
+            document.getElementById("statusText").innerText = "Step 1 Done! Now join WhatsApp.";
             updateProgress();
         } else {
-            document.getElementById("statusText").innerText = "Please stay on YouTube a bit longer!";
-            ytStart = 0; // Reset so they click again
+            document.getElementById("statusText").innerText = "Don't rush! Stay on YouTube a bit longer.";
+            ytStart = 0; 
+            document.getElementById("ytBtn").style.animation = "pulseRed 2s infinite"; // resume pulse
         }
     }
 });
@@ -220,19 +272,22 @@ function updateProgress(){
     if(progress === 100){
         document.getElementById("downloadBtn").classList.add("enabled");
         
-        // Change text and icon on completion
+        // Update WhatsApp button visually
+        document.getElementById("waBtn").innerHTML = '<i class="fa-solid fa-check"></i> Joined';
+        document.getElementById("waBtn").style.background = "#333";
+        document.getElementById("waBtn").style.boxShadow = "0 6px 0 #111";
+
         const statusEl = document.getElementById("statusText");
-        statusEl.innerHTML = "🎉 Verification complete. File unlocked!";
-        statusEl.style.color = "#FFD700";
+        statusEl.innerHTML = "✨ Unlocked! You can download now.";
+        statusEl.style.color = "#00f2fe";
         
         const dlBtn = document.getElementById("downloadBtn");
-        dlBtn.innerHTML = '<i class="fa-solid fa-cloud-arrow-down"></i> Download Datesheet';
+        dlBtn.innerHTML = '<i class="fa-solid fa-download"></i> Get Datesheet';
     }
 }
 
 function downloadFile(){
     if(ytDone && waDone){
-        // File name updated as requested
         window.location.href = "Private Datesheet.pdf"; 
     }
 }
